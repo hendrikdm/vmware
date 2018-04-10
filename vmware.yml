@@ -1,37 +1,26 @@
----
-- hosts: all
-  gather_facts: false
-  connection: local
-  vars:
-    vcenter_hostname: 10.10.10.1
-    esxhost: x.x.x.x
-    datastore: xxxx
-    network: xxx
-    vmtemplate: xxxx
-    vmcluster: xxxx
-    datacenter: xxxx
-    notes: This is a test
-  tasks:
-    - name: Check for required variables
-      fail: msg="Must pass name to -e"
-      when: name is not defined
-
-    - name: Check for vsphere access parameters
-      fail: msg="Must set vcenter_user and vcenter_pass in a vault"
-      when: (vcenter_user is not defined) or (vcenter_pass is not defined)
-
-    - name: Create vm from template
-      vsphere_guest:
-        vcenter_hostname: "{{ vcenter_hostname }}"
-        username: "{{ vcenter_user }}"
-        password: "{{ vcenter_pass }}"
-        guest: "{{ name }}"
-        from_template: yes
-        template_src: "{{ vmtemplate }}"
-        cluster: "{{ vmcluster }}"
-        resource_pool: "/Resources"
-        vm_extra_config:
-          notes: "{{ notes }}"
-        esxi:
-          datacenter: "{{ datacenter }}"
-          hostname: "{{ esxhost }}"
+- name: Create a VM from a template
+  vmware_guest:
+    hostname: "{{ vcenter_host }}"
+    username: "{{ vcenter_user }}"
+    password: "{{ vcenter_pass }}"
+    validate_certs: no
+    folder: /testvms
+    name: testvm_2
+    state: poweredon
+    template: Centos7-Template
+    disk:
+    - size_gb: 10
+      type: thin
+      datastore: DATA2
+    hardware:
+      memory_mb: 512
+      num_cpus: 2
+      num_cpu_cores_per_socket: 1
+      scsi: paravirtual
+      max_connections: 5
+      hotadd_cpu: True
+      hotremove_cpu: True
+      hotadd_memory: False
+    networks:
+    - name: Vlan77
+  register: deploy
