@@ -1,5 +1,5 @@
 ---
-- host: vmcreate
+- host: all
   gather_facts: false
   connection: local
   vars:
