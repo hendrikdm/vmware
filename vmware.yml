@@ -1,3 +1,4 @@
+---
 - host: vmcreate
   gather_facts: false
   connection: local
