@@ -1,26 +1,29 @@
-- name: Create a VM from a template
-  vmware_guest:
-    hostname: "{{ vcenter_host }}"
-    username: "{{ vcenter_user }}"
-    password: "{{ vcenter_pass }}"
-    validate_certs: no
-    folder: /testvms
-    name: testvm_2
-    state: poweredon
-    template: Centos7-Template
-    disk:
-    - size_gb: 10
-      type: thin
-      datastore: DATA2
-    hardware:
-      memory_mb: 512
-      num_cpus: 2
-      num_cpu_cores_per_socket: 1
-      scsi: paravirtual
-      max_connections: 5
-      hotadd_cpu: True
-      hotremove_cpu: True
-      hotadd_memory: False
-    networks:
-    - name: Vlan77
-  register: deploy
+---
+- hosts: all
+  tasks:
+    - name: "Create a VM from a template"
+      vmware_guest:
+        hostname: "{{ vcenter_host }}"
+        username: "{{ vcenter_user }}"
+        password: "{{ vcenter_pass }}"
+        validate_certs: no
+        folder: /testvms
+        name: testvm_2
+        state: poweredon
+        template: Centos7-Template
+        disk:
+          - size_gb: 10
+            type: thin
+            datastore: DATA2
+        hardware:
+          memory_mb: 512
+          num_cpus: 2
+          num_cpu_cores_per_socket: 1
+          scsi: paravirtual
+          max_connections: 5
+          hotadd_cpu: True
+          hotremove_cpu: True
+          hotadd_memory: False
+        networks:
+          - name: Vlan77
+        register: deploy
