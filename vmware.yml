@@ -1,0 +1,36 @@
+- host: vmcreate
+  gather_facts: false
+  connection: local
+  vars:
+    vcenter_hostname: 10.10.10.1
+    esxhost: x.x.x.x
+    datastore: xxxx
+    network: xxx
+    vmtemplate: xxxx
+    vmcluster: xxxx
+    datacenter: xxxx
+    notes: This is a test
+  tasks:
+    - name: Check for required variables
+      fail: msg="Must pass name to -e"
+      when: name is not defined
+
+    - name: Check for vsphere access parameters
+      fail: msg="Must set vcenter_user and vcenter_pass in a vault"
+      when: (vcenter_user is not defined) or (vcenter_pass is not defined)
+
+    - name: Create vm from template
+      vsphere_guest:
+        vcenter_hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_user }}"
+        password: "{{ vcenter_pass }}"
+        guest: "{{ name }}"
+        from_template: yes
+        template_src: "{{ vmtemplate }}"
+        cluster: "{{ vmcluster }}"
+        resource_pool: "/Resources"
+        vm_extra_config:
+          notes: "{{ notes }}"
+        esxi:
+          datacenter: "{{ datacenter }}"
+          hostname: "{{ esxhost }}"
