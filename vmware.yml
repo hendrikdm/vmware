@@ -1,17 +1,13 @@
 ---
 - hosts: all
   connection: local
-  vars:
-    hostname: "{{ vcenter_host }}"
-    username: "{{ vcenter_user }}"
-    password: "{{ vcenter_pass }}"
   tasks:
     - name: "Create a VM from a template"
       vmware_guest:
         port: 443
-        hostname: "{{ hostname }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_user }}"
+        password: "{{ vcenter_pass }}"
         validate_certs: no
         folder: /testvms
         name: testvm_2
