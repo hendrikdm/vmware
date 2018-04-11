@@ -12,7 +12,7 @@
         folder: /testvms
         name: testvm_2
         state: poweredon
-        template: Centos7-Template
+        template: Centos7Template
         datacenter: netappTest
         disk:
           - size_gb: 40
