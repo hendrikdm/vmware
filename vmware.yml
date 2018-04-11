@@ -14,7 +14,6 @@
         state: poweredon
         template: Centos7Template
         datacenter: netappTest
-        datastore: DATA2
         disk:
           - size_gb: 40
             type: thin
