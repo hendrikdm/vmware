@@ -27,5 +27,5 @@
           hotadd_memory: False
         networks:
           - name: Vlan77
-      delegate_to: localhost
+    delegate_to: localhost
     register: deploy
