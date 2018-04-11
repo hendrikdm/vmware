@@ -13,6 +13,7 @@
         name: testvm_2
         state: poweredon
         template: Centos7-Template
+        datacenter: netappTest
         disk:
           - size_gb: 10
             type: thin
