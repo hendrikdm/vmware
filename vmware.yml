@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  connection: local
   tasks:
     - name: "Create a VM from a template"
       vmware_guest:
