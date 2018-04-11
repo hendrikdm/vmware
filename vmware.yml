@@ -3,6 +3,7 @@
   tasks:
     - name: "Create a VM from a template"
       vmware_guest:
+        port: 443
         hostname: "{{ vcenter_host }}"
         username: "{{ vcenter_user }}"
         password: "{{ vcenter_pass }}"
